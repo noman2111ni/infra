@@ -122,11 +122,12 @@ module "web_service" {
 #############################################
 module "ecr_api" {
   source               = "./modules/ecr"
-  ECR_Repo_name        = "ezfacility-ezleagues-api"
+  name        = "ezfacility-ezleagues-api"
   environment          = var.environment
   image_tag_mutability = "MUTABLE"
   scan_on_push         = true
   lifecycle_policy     = 10
+
 }
 
 #############################################
@@ -134,7 +135,7 @@ module "ecr_api" {
 #############################################
 module "ecr_mcp" {
   source               = "./modules/ecr"
-  ECR_Repo_name        = "ezfacility-ezleagues-mcp"
+  name        = "ezfacility-ezleagues-mcp"
   environment          = var.environment
   image_tag_mutability = "MUTABLE"
   scan_on_push         = true
