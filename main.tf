@@ -8,20 +8,11 @@ terraform {
     }
   }
 }
+
 provider "aws" {
   region = var.region
 }
-#############################################
-# VPC Module
-#############################################
-module "ez_vpc" {
-  source       = "git::https://ezfacility@dev.azure.com/ezfacility/Infra/_git/module-aws-vpc?ref=v1"
-  environment  = var.environment
-  vpc_name     = "${var.environment}-ezleagues"
-  vpc_cidr     = var.vpc_cidr
-  private_list = var.private_subnets
-  public_list  = var.public_subnets
-}
+
 #############################################
 # ECS Cluster Module
 #############################################
@@ -29,6 +20,7 @@ module "ez_cluster" {
   source      = "git::https://ezfacility@dev.azure.com/ezfacility/Infra/_git/module-aws-ecs-cluster?ref=v1"
   environment = var.environment
 }
+
 #############################################
 # ALB Module
 #############################################
@@ -38,6 +30,7 @@ module "alb" {
   region      = var.region
   lb_name     = "ezleagues"
   vpc_name    = "${var.environment}-ezleagues-vpc"
+
   http_listener_rules = [
     {
       priority     = 10
@@ -52,6 +45,7 @@ module "alb" {
       tg_name      = "ezleagues-api"
     }
   ]
+
   https_listener_rules = [
     {
       priority     = 10
@@ -66,7 +60,9 @@ module "alb" {
       tg_name      = "ezleagues-api"
     }
   ]
+
   certificate_arn = var.certificate_arn
+
   ingress_list = [
     {
       from_port   = 80
@@ -81,6 +77,7 @@ module "alb" {
       cidr_blocks = ["0.0.0.0/0"]
     }
   ]
+
   egress_list = [
     {
       from_port   = 0
@@ -90,6 +87,7 @@ module "alb" {
     }
   ]
 }
+
 #############################################
 # ECR - API
 #############################################
@@ -101,6 +99,7 @@ module "ecr_api" {
   scan_on_push         = true
   lifecycle_policy     = 10
 }
+
 #############################################
 # ECR - MCP
 #############################################
@@ -112,6 +111,7 @@ module "ecr_mcp" {
   scan_on_push         = true
   lifecycle_policy     = 10
 }
+
 #############################################
 # ECS Service - API
 #############################################
@@ -123,6 +123,7 @@ module "api_service" {
   vpc_name         = "${var.environment}-ezleagues-vpc"
   target_group_arn = module.alb.https_tg["0"].arn
   container_name   = "ezleagues-api-container"
+
   ingress_list = [
     {
       from_port   = 8080
@@ -131,6 +132,7 @@ module "api_service" {
       cidr_blocks = ["0.0.0.0/0"]
     }
   ]
+
   egress_list = [
     {
       from_port   = 0
@@ -140,6 +142,7 @@ module "api_service" {
     }
   ]
 }
+
 #############################################
 # ECS Service - MCP
 #############################################

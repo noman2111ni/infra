@@ -4,7 +4,7 @@ variable "name" {
 }
 
 variable "environment" {
-  description = "Environment (dev/qa/prod/test)"
+  description = "Environment test"
   type        = string
 }
 
