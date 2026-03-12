@@ -8,22 +8,15 @@ terraform {
     }
   }
 }
-
 provider "aws" {
   region = var.region
 }
-
-#############################################
 # ECS Cluster Module
-#############################################
 module "ez_cluster" {
   source      = "git::https://ezfacility@dev.azure.com/ezfacility/Infra/_git/module-aws-ecs-cluster?ref=v1"
   environment = var.environment
 }
-
-#############################################
 # ALB Module
-#############################################
 module "alb" {
   source      = "git::https://ezfacility@dev.azure.com/ezfacility/Infra/_git/module-aws-alb?ref=main"
   environment = var.environment
@@ -87,10 +80,7 @@ module "alb" {
     }
   ]
 }
-
-#############################################
 # ECR - API
-#############################################
 module "ecr_api" {
   source               = "./modules/ecr"
   name                 = "ezfacility-ezleagues-api"
@@ -99,10 +89,7 @@ module "ecr_api" {
   scan_on_push         = true
   lifecycle_policy     = 10
 }
-
-#############################################
 # ECR - MCP
-#############################################
 module "ecr_mcp" {
   source               = "./modules/ecr"
   name                 = "ezfacility-ezleagues-mcp"
@@ -111,10 +98,7 @@ module "ecr_mcp" {
   scan_on_push         = true
   lifecycle_policy     = 10
 }
-
-#############################################
 # ECS Service - API
-#############################################
 module "api_service" {
   source           = "git::https://ezfacility@dev.azure.com/ezfacility/Infra/_git/module-aws-ecs-service?ref=v1.0.0"
   environment      = var.environment
@@ -143,9 +127,7 @@ module "api_service" {
   ]
 }
 
-#############################################
 # ECS Service - MCP
-#############################################
 module "mcp_service" {
   source           = "git::https://ezfacility@dev.azure.com/ezfacility/Infra/_git/module-aws-ecs-service?ref=v1.0.0"
   environment      = var.environment

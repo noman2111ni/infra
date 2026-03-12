@@ -1,0 +1,13 @@
+variable "environment" {}
+variable "region" {}
+variable "name" {}
+variable "ecs_task_execution_role_arn" {}
+variable "ecs_task_role_arn" {}
+variable "database_url_secret_arn" {}
+variable "redis_url_secret_arn" {}
+variable "jwt_secret_arn" {}
+variable "admin_credentials_secret_arn" {}
+variable "ecr_repository_uri" {}
+variable "container_image_tag" {}
+variable "acm_certificate_arn" {}
+variable "alarm_sns_topic_arn" {}
