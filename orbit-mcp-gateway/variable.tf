@@ -1,0 +1,13 @@
+variable "region" {}
+variable "environment" {}
+variable "ecr_repository_uri" {}
+variable "existing_cluster_name" {}
+variable "service_discovery_namespace_id" {}
+variable "alb_listener_arn" {}
+variable "mcp_gateway_hostname" {}
+variable "name" {}
+variable "vpc_id" {}
+variable "listener_rule_priority" {}
+variable "service_discovery_namespace_name" {}
+variable "update_ssm_parameter" {}
+variable "private_subnet_ids" {}
